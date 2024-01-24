@@ -11,12 +11,27 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import axios from "axios";
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
+
+  const navigate = useNavigate();
+
+  const handelLogout = () => {
+    axios
+      .post("http://localhost:8800/auth/logout")
+      .then((res) => {
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -80,7 +95,7 @@ const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
-          <li>
+          <li onClick={handelLogout}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
