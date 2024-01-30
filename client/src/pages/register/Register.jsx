@@ -29,7 +29,7 @@ const Register = () => {
       <form action="">
         <input type="text" name="username" onChange={handleChange} />
         <input type="text" name="password" onChange={handleChange} />
-        <p>incase of an error</p>
+        <p>{err && err}</p>
         <button onClick={handleClick}>Register</button>
       </form>
     </div>
