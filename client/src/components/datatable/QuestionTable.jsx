@@ -4,6 +4,7 @@ import { userColumns } from "../../datatablesource";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Datatable = () => {
   const [data, setData] = useState([]);
@@ -19,8 +20,19 @@ const Datatable = () => {
       });
   }, []);
 
+  const navigate = useNavigate();
+
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    axios
+      .delete(`http://localhost:8800/questions/delete/${id}`)
+      .then((res) => {
+        if (res.status == 200) {
+          window.location.reload(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const actionColumn = [
@@ -52,7 +64,7 @@ const Datatable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Add New Questions
-        <Link to="/users/new" className="link">
+        <Link to="/questions/new" className="link">
           Add New
         </Link>
       </div>

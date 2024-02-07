@@ -5,8 +5,10 @@ import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import SingleQuestion from "./pages/single/SingleQuestion";
 import New from "./pages/new/New";
+import NewQuestion from "./pages/new/NewQuestion";
+import QuestionEdit from "./pages/edit/QuestionEdit";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { productInputs, userInputs } from "./formSource";
+import { questionsInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -28,12 +30,32 @@ function App() {
               <Route path=":userId" element={<Single />} />
               <Route
                 path="new"
-                element={<New inputs={userInputs} title="Add New User" />}
+                element={
+                  <New inputs={questionsInputs} title="Add New Question" />
+                }
               />
             </Route>
             <Route path="questions">
               <Route index element={<QuestionList />} />
               <Route path=":questionId" element={<SingleQuestion />} />
+              <Route
+                path="new"
+                element={
+                  <NewQuestion
+                    inputs={questionsInputs}
+                    title="Add New Question"
+                  />
+                }
+              />
+              <Route
+                path="edit/:questionId"
+                element={
+                  <QuestionEdit
+                    inputs={questionsInputs}
+                    title="Edit Question"
+                  />
+                }
+              />
             </Route>
           </Route>
         </Routes>

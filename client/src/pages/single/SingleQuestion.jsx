@@ -28,7 +28,9 @@ const SingleQuestion = () => {
           {data.map((data) => {
             return (
               <div className="left">
-                <div className="editButton">Edit</div>
+                <Link to={`/questions/edit/${data.id}`}>
+                  <div className="editButton">Edit</div>
+                </Link>
                 <div className="mainTitle">
                   <h1 className="title">Question #{data.id}</h1>
                   <p className={`diff ${data.difficulty}`}>{data.difficulty}</p>
