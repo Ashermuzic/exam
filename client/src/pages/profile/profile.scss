@@ -1,0 +1,23 @@
+.home {
+  display: flex;
+
+  .homeContainer {
+    .profile-box {
+      display: flex;
+      justify-content: space-between;
+      // padding: 20px;
+      .left {
+        width: 50%;
+        padding: 20px;
+        .left-box {
+          .title {
+          }
+        }
+      }
+
+      .right {
+        width: 50%;
+      }
+    }
+  }
+}

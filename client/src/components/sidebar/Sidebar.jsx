@@ -64,10 +64,12 @@ const Sidebar = () => {
           </li>
 
           <p className="title">USER</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
+          <Link to="/profile" style={{ textDecoration: "none" }}>
+            <li>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Profile</span>
+            </li>
+          </Link>
           <li onClick={handelLogout}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>

@@ -5,6 +5,7 @@ import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import SingleQuestion from "./pages/single/SingleQuestion";
 import New from "./pages/new/New";
+import Profile from "./pages/profile/Profile";
 import NewQuestion from "./pages/new/NewQuestion";
 import QuestionEdit from "./pages/edit/QuestionEdit";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -56,6 +57,9 @@ function App() {
                   />
                 }
               />
+            </Route>
+            <Route>
+              <Route path="profile" element={<Profile />}></Route>
             </Route>
           </Route>
         </Routes>

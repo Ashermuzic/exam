@@ -2,18 +2,45 @@ import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { userColumns } from "../../datatablesource";
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/authContext";
 
 const Datatable = () => {
   const [data, setData] = useState([]);
 
+  const { currentUser } = useContext(AuthContext);
+
   useEffect(() => {
+    // Fetch questions data
     axios
-      .get("http://localhost:8800/questions")
-      .then((res) => {
-        setData(res.data);
+      .get(`http://localhost:8800/questions/${currentUser.id}`)
+      .then((questionsRes) => {
+        // Fetch course data
+        axios
+          .get("http://localhost:8800/info/courses")
+          .then((coursesRes) => {
+            // Create a map of course IDs to course names
+            const courseMap = {};
+            coursesRes.data.forEach((course) => {
+              courseMap[course.id] = course.course_name;
+            });
+
+            // Map over the questions data and replace course IDs with course names
+            const newData = questionsRes.data.map((item) => {
+              return {
+                ...item,
+                course_name: courseMap[item.course],
+              };
+            });
+
+            // Update state with the modified data
+            setData(newData);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -39,7 +66,7 @@ const Datatable = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 175,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -60,6 +87,7 @@ const Datatable = () => {
       },
     },
   ];
+
   return (
     <div className="datatable">
       <div className="datatableTitle">

@@ -2,9 +2,9 @@ import { db } from "../connect.js";
 import moment from "moment/moment.js";
 
 export const viewQuestions = (req, res) => {
-  const q = "SELECT * FROM questions";
+  const q = "SELECT * FROM questions WHERE teacher_id = ?";
 
-  db.query(q, (err, data) => {
+  db.query(q, [req.params.teacherId], (err, data) => {
     if (err) return res.status(500).json(err);
     return res.status(200).json(data);
   });
