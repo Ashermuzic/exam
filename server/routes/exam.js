@@ -8,9 +8,9 @@ import {
 } from "../controllers/exam.js";
 
 //GET
-router.get("/:teacherId", getExams);
-router.get("/details/:id", getExamDetails);
-router.get("/questions/:id", getExamQuestions);
+router.get("/:teacherId", getExams); // exams of a single teacher
+router.get("/details/:id", getExamDetails); // details of a specific exam
+router.get("/questions/:id", getExamQuestions); // questions in an exam
 
 //POST
 

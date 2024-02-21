@@ -49,10 +49,12 @@ const Sidebar = () => {
               <span>Questions</span>
             </li>
           </Link>
-          <li>
-            <LibraryBooksIcon className="icon" />
-            <span>Exams</span>
-          </li>
+          <Link to="/exams" style={{ textDecoration: "none" }}>
+            <li>
+              <LibraryBooksIcon className="icon" />
+              <span>Exams</span>
+            </li>
+          </Link>
           <p className="title">USEFUL</p>
           <li>
             <InsertChartIcon className="icon" />

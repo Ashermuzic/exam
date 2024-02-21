@@ -4,6 +4,7 @@ import Register from "./pages/register/Register";
 import List from "./pages/list/List";
 import Single from "./pages/single/Single";
 import SingleQuestion from "./pages/single/SingleQuestion";
+import SingleExam from "./pages/single/SingleExam";
 import New from "./pages/new/New";
 import Profile from "./pages/profile/Profile";
 import NewQuestion from "./pages/new/NewQuestion";
@@ -14,6 +15,7 @@ import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import QuestionList from "./pages/list/QuestionList";
+import ExamList from "./pages/list/ExamList";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -39,6 +41,28 @@ function App() {
             <Route path="questions">
               <Route index element={<QuestionList />} />
               <Route path=":questionId" element={<SingleQuestion />} />
+              <Route
+                path="new"
+                element={
+                  <NewQuestion
+                    inputs={questionsInputs}
+                    title="Add New Question"
+                  />
+                }
+              />
+              <Route
+                path="edit/:questionId"
+                element={
+                  <QuestionEdit
+                    inputs={questionsInputs}
+                    title="Edit Question"
+                  />
+                }
+              />
+            </Route>
+            <Route path="exams">
+              <Route index element={<ExamList />} />
+              <Route path=":examId" element={<SingleExam />} />
               <Route
                 path="new"
                 element={
