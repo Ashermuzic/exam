@@ -5,13 +5,14 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import moment from "moment";
 
-const ExamList = () => {
-  const [exams, setExams] = useState();
+const ExamList = (examId) => {
+  const [exams, setExams] = useState([]);
 
   useEffect(() => {
     axios
-      .get("")
+      .get(`http://localhost:8800/exams/${examId.examId}`)
       .then((res) => {
         setExams(res.data);
       })
@@ -19,6 +20,7 @@ const ExamList = () => {
         console.log(err);
       });
   }, []);
+
   return (
     <div className="list">
       <Sidebar />
@@ -33,24 +35,27 @@ const ExamList = () => {
           </div>
 
           <div className="exam-cards">
-            <div className="exam-card">
-              <div className="card-top">
-                <div className="exam-title">Data Structures</div>
-                <div className="exam-date" style={{ fontSize: "13px" }}>
-                  2024/2/19
+            {exams.map((exam) => {
+              return (
+                <div className="exam-card">
+                  <div className="card-top">
+                    <div className="exam-title">{exam.exam_name}</div>
+                    <div className="exam-date" style={{ fontSize: "13px" }}>
+                      {exam.created_date}
+                    </div>
+                  </div>
+                  <div className="exam-detail">{exam.exam_desc}</div>
+                  <div className="card-bottom">
+                    <div className="exam-diff">{exam.difficulty}</div>
+                    <Link to={`/exams/${exam.id}`}>
+                      <div className="icon">
+                        <OpenInNewIcon />
+                      </div>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div className="exam-detail">
-                this the the place where you will put the exam detaisl
-                expalining about the general things about the exam
-              </div>
-              <div className="card-bottom">
-                <div className="exam-diff">Easy</div>
-                <div className="icon">
-                  <OpenInNewIcon />
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>

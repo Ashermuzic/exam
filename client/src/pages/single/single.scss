@@ -38,6 +38,21 @@
           }
         }
 
+        .exam-details {
+          .top-layer {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(196, 193, 193, 0.13);
+            padding: 10px 5px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+          }
+
+          .body {
+            // background: red;
+          }
+        }
+
         .question {
           font-size: 17px;
         }

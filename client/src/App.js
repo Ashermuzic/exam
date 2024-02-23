@@ -14,11 +14,13 @@ import { questionsInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
+import { AuthContext } from "./context/authContext";
 import QuestionList from "./pages/list/QuestionList";
 import ExamList from "./pages/list/ExamList";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
@@ -61,26 +63,8 @@ function App() {
               />
             </Route>
             <Route path="exams">
-              <Route index element={<ExamList />} />
+              <Route index element={<ExamList examId={currentUser.id} />} />
               <Route path=":examId" element={<SingleExam />} />
-              <Route
-                path="new"
-                element={
-                  <NewQuestion
-                    inputs={questionsInputs}
-                    title="Add New Question"
-                  />
-                }
-              />
-              <Route
-                path="edit/:questionId"
-                element={
-                  <QuestionEdit
-                    inputs={questionsInputs}
-                    title="Edit Question"
-                  />
-                }
-              />
             </Route>
             <Route>
               <Route path="profile" element={<Profile />}></Route>

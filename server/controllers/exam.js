@@ -2,8 +2,15 @@ import { db } from "../connect.js";
 
 export const getExams = (req, res) => {
   // Get the exams of a single teacher
-  const q =
-    "SELECT id, exam_name, course, created_date FROM exam_details WHERE teacher_id = ?";
+  // const q =
+  //   "SELECT id, exam_name, exam_desc, difficulty, course, created_date FROM exam_details WHERE teacher_id = ?";
+
+  const q = `
+  SELECT ed.id, ed.exam_name, ed.exam_desc, ed.difficulty, c.course_name, ed.created_date
+  FROM exam_details ed
+  JOIN courses c ON ed.course = c.id
+  WHERE ed.teacher_id = ?
+  `;
 
   db.query(q, [req.params.teacherId], (err, data) => {
     if (err) return res.status(500).json(err);
@@ -13,7 +20,12 @@ export const getExams = (req, res) => {
 
 export const getExamDetails = (req, res) => {
   // Get the details of a specific exam
-  const q = "SELECT * FROM exam_details WHERE id = ?";
+  const q = `
+  SELECT ed.*, c.course_name
+  FROM exam_details ed
+  JOIN courses c ON ed.course = c.id
+  WHERE ed.id = ?
+  `;
 
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.status(500).json(err);

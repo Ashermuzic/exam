@@ -11,13 +11,13 @@ const Datatable = () => {
   const [data, setData] = useState([]);
 
   const { currentUser } = useContext(AuthContext);
+  console.log(currentUser);
 
   useEffect(() => {
     // Fetch questions data
     axios
       .get(`http://localhost:8800/questions/${currentUser.id}`)
       .then((questionsRes) => {
-        // Fetch course data
         axios
           .get("http://localhost:8800/info/courses")
           .then((coursesRes) => {

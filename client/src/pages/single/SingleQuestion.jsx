@@ -10,7 +10,7 @@ const SingleQuestion = () => {
   const { questionId } = useParams();
 
   useEffect(() => {
-    axios(`http://localhost:8800/questions/${questionId}`)
+    axios(`http://localhost:8800/questions/single/${questionId}`)
       .then((res) => {
         setData(res.data);
       })

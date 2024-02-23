@@ -1,6 +1,7 @@
 import { db } from "../connect.js";
 import moment from "moment/moment.js";
 
+// questions of a certain teacher
 export const viewQuestions = (req, res) => {
   const q = "SELECT * FROM questions WHERE teacher_id = ?";
 
@@ -10,6 +11,7 @@ export const viewQuestions = (req, res) => {
   });
 };
 
+// get single question
 export const viewQuestion = (req, res) => {
   const q = "SELECT * FROM questions WHERE id = ?";
 
@@ -19,6 +21,7 @@ export const viewQuestion = (req, res) => {
   });
 };
 
+// add a question
 export const addQuestion = (req, res) => {
   const q =
     "INSERT INTO questions (`question`,`answer`,`difficulty`,`teacher_id`, `createdAt`) VALUES (?, ?, ?, ?, ?)";
@@ -39,6 +42,7 @@ export const addQuestion = (req, res) => {
   });
 };
 
+// update a question
 export const updateQuestion = (req, res) => {
   const q =
     "UPDATE questions SET question = ?, answer = ?, difficulty = ? WHERE id = ?";
@@ -56,6 +60,7 @@ export const updateQuestion = (req, res) => {
   });
 };
 
+//delete a question
 export const deleteQuestion = (req, res) => {
   const q = "DELETE FROM questions WHERE id = ?";
 

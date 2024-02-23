@@ -10,8 +10,8 @@ import {
   deleteQuestion,
 } from "../controllers/questions.js";
 
+router.get("/single/:id", viewQuestion);
 router.get("/:teacherId", viewQuestions);
-router.get("/:id", viewQuestion);
 router.post("/add", addQuestion);
 router.put("/update/:id", updateQuestion);
 router.delete("/delete/:id", deleteQuestion);
