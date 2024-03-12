@@ -8,9 +8,10 @@ import SingleExam from "./pages/single/SingleExam";
 import New from "./pages/new/New";
 import Profile from "./pages/profile/Profile";
 import NewQuestion from "./pages/new/NewQuestion";
+import NewExam from "./pages/new/NewExam";
 import QuestionEdit from "./pages/edit/QuestionEdit";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { questionsInputs } from "./formSource";
+import { questionsInputs, examInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -20,6 +21,7 @@ import ExamList from "./pages/list/ExamList";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
+  // error at first because there is no current user but we try to use the user id
   const { currentUser } = useContext(AuthContext);
 
   return (
@@ -65,6 +67,10 @@ function App() {
             <Route path="exams">
               <Route index element={<ExamList examId={currentUser.id} />} />
               <Route path=":examId" element={<SingleExam />} />
+              <Route
+                path="new"
+                element={<NewExam inputs={examInputs} title="Add New Exam" />}
+              />
             </Route>
             <Route>
               <Route path="profile" element={<Profile />}></Route>

@@ -29,7 +29,7 @@ const ExamList = (examId) => {
         <div className="container">
           <div className="title">
             Exams List
-            <Link to="/users/new" className="link">
+            <Link to="/exams/new" className="link">
               Add New
             </Link>
           </div>

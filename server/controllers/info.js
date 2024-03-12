@@ -18,3 +18,12 @@ export const getCourses = (req, res) => {
     return res.status(200).json(data);
   });
 };
+
+export const getCourseChapters = (req, res) => {
+  const q = "SELECT chapters from courses WHERE id = ?";
+
+  db.query(q, [req.params.courseId], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json(data[0]);
+  });
+};
