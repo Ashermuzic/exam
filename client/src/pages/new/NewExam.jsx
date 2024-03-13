@@ -22,6 +22,12 @@ const NewExam = ({ inputs, title }) => {
     teacher_id: teacher_id,
   });
 
+  const [pExamData, setPExamData] = useState({
+    pExam_Id: "",
+    pExam_chapters: [],
+    pExam_amount: [],
+  });
+
   const [selectedChapters, setSelectedChapters] = useState([]);
 
   const navigate = useNavigate();
@@ -37,14 +43,39 @@ const NewExam = ({ inputs, title }) => {
       });
   }, [teacher_id]);
 
+  // const handleChapterCheckboxChange = (e) => {
+  //   const { value, checked } = e.target;
+  //   if (checked) {
+  //     setSelectedChapters([...selectedChapters, value]);
+  //   } else {
+  //     setSelectedChapters(
+  //       selectedChapters.filter((chapter) => chapter !== value)
+  //     );
+  //   }
+  // };
+
   const handleChapterCheckboxChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
+      // Add the chapter to selectedChapters
       setSelectedChapters([...selectedChapters, value]);
+      // Update pExamData with the selected chapter
+      setPExamData((prevData) => ({
+        ...prevData,
+        pExam_chapters: [...prevData.pExam_chapters, value],
+      }));
     } else {
+      // Remove the chapter from selectedChapters
       setSelectedChapters(
         selectedChapters.filter((chapter) => chapter !== value)
       );
+      // Update pExamData by filtering out the unselected chapter
+      setPExamData((prevData) => ({
+        ...prevData,
+        pExam_chapters: prevData.pExam_chapters.filter(
+          (chapter) => chapter !== value
+        ),
+      }));
     }
   };
 
@@ -69,22 +100,36 @@ const NewExam = ({ inputs, title }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can use selectedChapters array in your formData
-    const updatedFormData = {
-      ...formData,
-      chapters: selectedChapters,
-    };
 
-    console.log(updatedFormData);
+    const { pExam_chapters, pExam_amount } = pExamData;
+    // Create the exam
+    console.log(formData);
+    axios
+      .post("http://localhost:8800/exams/new-exam", formData)
+      .then((res) => {
+        const examId = res.data.insertId;
 
-    // axios
-    //   .post("http://localhost:8800/questions/add", updatedFormData)
-    //   .then((res) => {
-    //     navigate("/questions");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+        const populateData = {
+          examId: examId,
+          chapters: pExam_chapters,
+          amount: [pExam_amount.easy, pExam_amount.medium, pExam_amount.hard],
+        };
+
+        console.log(populateData);
+
+        axios
+          .post("http://localhost:8800/exams/populate-exam", populateData)
+          .then((res) => {
+            console.log("Exam populated successfully");
+            navigate("/exams");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleInputChange = (e, inputName) => {
@@ -92,6 +137,28 @@ const NewExam = ({ inputs, title }) => {
       ...formData,
       [inputName]: e.target.value,
     });
+  };
+
+  // const handlePopulateData = (e, inputName) => {
+  //   const { name, value } = e.target;
+  //   setPExamData((prevData) => ({
+  //     ...prevData,
+  //     [inputName]: {
+  //       ...prevData[inputName],
+  //       [name]: value,
+  //     },
+  //   }));
+  // };
+
+  const handlePopulateData = (e, inputName) => {
+    const { name, value } = e.target;
+    setPExamData((prevData) => ({
+      ...prevData,
+      [inputName]: {
+        ...prevData[inputName],
+        [name]: value,
+      },
+    }));
   };
 
   const generateCheckboxes = () => {
@@ -161,11 +228,29 @@ const NewExam = ({ inputs, title }) => {
               <label htmlFor="">Amount of questions</label>
               <div className="questions-amount">
                 <p>easy</p>
-                <input type="number" name="amount" min={0} defaultValue={0} />
+                <input
+                  type="number"
+                  name="easy"
+                  min={0}
+                  defaultValue={0}
+                  onChange={(e) => handlePopulateData(e, "pExam_amount")}
+                />
                 <p>medium</p>
-                <input type="number" name="amount" min={0} defaultValue={0} />
+                <input
+                  type="number"
+                  name="medium"
+                  min={0}
+                  defaultValue={0}
+                  onChange={(e) => handlePopulateData(e, "pExam_amount")}
+                />
                 <p>hard</p>
-                <input type="number" name="amount" min={0} defaultValue={0} />
+                <input
+                  type="number"
+                  name="hard"
+                  min={0}
+                  defaultValue={0}
+                  onChange={(e) => handlePopulateData(e, "pExam_amount")}
+                />
               </div>
             </div>
           </div>

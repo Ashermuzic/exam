@@ -34,8 +34,13 @@ export const getExamDetails = (req, res) => {
 };
 
 export const getExamQuestions = (req, res) => {
-  // Get the questions in an exam
-  const q = "SELECT questions_id FROM exam_questions WHERE exam_id = ?";
+  // Get the questions in an exam with their content
+  const q = `
+    SELECT q.id, q.question, q.answer, q.difficulty
+    FROM questions q
+    JOIN exam_questions eq ON q.id = eq.questions_id
+    WHERE eq.exam_id = ?
+  `;
 
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.status(500).json(err);
@@ -65,6 +70,8 @@ export const createExam = (req, res) => {
 // Endpoint to populate an exam with questions
 export const populateExam = (req, res) => {
   const { examId, chapters, amount } = req.body;
+
+  console.log(examId, chapters, amount);
 
   const easyAmount = amount[0] || 0;
   const mediumAmount = amount[1] || 0;

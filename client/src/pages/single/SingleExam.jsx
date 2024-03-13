@@ -48,7 +48,7 @@ const SingleQuestion = () => {
                       <p style={{ marginLeft: "10px" }}>{res.created_date}</p>
                     </div>
                   </div>
-                  <div className="">{res.exam_desc}</div>
+                  {/* <div className="">{res.exam_desc}</div> */}
                   {/* have a section for number of question the exam has and 
                   make a cool chart based on the count of questions and there difficulty*/}
                 </div>
