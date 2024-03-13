@@ -85,6 +85,28 @@
                 outline: none;
               }
             }
+
+            select {
+              width: 100%;
+              padding: 5px;
+              border: none;
+              border-bottom: 1px solid gray;
+              appearance: none; // Removes default dropdown arrow
+              background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E")
+                no-repeat right 10px center;
+              background-size: 12px;
+              background-color: #fff; // Add your desired background color
+
+              &:focus {
+                border-bottom: 1px solid gray;
+                outline: none;
+              }
+            }
+
+            option {
+              background-color: white;
+              color: black;
+            }
           }
         }
       }

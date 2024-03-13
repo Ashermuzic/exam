@@ -12,6 +12,8 @@ const NewExam = ({ inputs, title }) => {
   const teacher_id = teacher.id;
 
   const [courseCount, setCourseCount] = useState(0);
+  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState("");
 
   const [formData, setFormData] = useState({
     question: "",
@@ -26,14 +28,14 @@ const NewExam = ({ inputs, title }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8800/info/course-chapters/1")
+      .get(`http://localhost:8800/info/teacherCourses/${teacher_id}`)
       .then((res) => {
-        setCourseCount(res.data.chapters);
+        setCourses(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [teacher_id]);
 
   const handleChapterCheckboxChange = (e) => {
     const { value, checked } = e.target;
@@ -44,6 +46,25 @@ const NewExam = ({ inputs, title }) => {
         selectedChapters.filter((chapter) => chapter !== value)
       );
     }
+  };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8800/info/course-chapters/${selectedCourse}`)
+      .then((res) => {
+        setCourseCount(res.data.chapters);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [selectedCourse]);
+
+  const handleCourseChange = (e) => {
+    setSelectedCourse(e.target.value);
+    setFormData({
+      ...formData,
+      course: e.target.value,
+    });
   };
 
   const handleSubmit = (e) => {
@@ -70,8 +91,6 @@ const NewExam = ({ inputs, title }) => {
       [inputName]: e.target.value,
     });
   };
-
-  console.log(courseCount);
 
   const generateCheckboxes = () => {
     const checkboxes = [];
@@ -114,6 +133,22 @@ const NewExam = ({ inputs, title }) => {
                   />
                 </div>
               ))}
+              {/* Dropdown for selecting course */}
+              <div className="formInput">
+                <label>Course</label>
+                <select
+                  value={selectedCourse}
+                  onChange={handleCourseChange}
+                  className="select-course"
+                >
+                  <option value="">Select a course</option>
+                  {courses.map((course) => (
+                    <option key={course.course_id} value={course.course_id}>
+                      {course.course_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </form>
           </div>
           <div className="left">
