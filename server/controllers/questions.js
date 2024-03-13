@@ -24,7 +24,7 @@ export const viewQuestion = (req, res) => {
 // add a question
 export const addQuestion = (req, res) => {
   const q =
-    "INSERT INTO questions (`question`,`answer`,`difficulty`,`teacher_id`, `createdAt`) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO questions (`question`,`answer`,`difficulty`, `course`, `chapter`, `teacher_id`, `createdAt`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
   const createdAt = moment().format("YYYY-MM-DD");
 
@@ -32,6 +32,8 @@ export const addQuestion = (req, res) => {
     req.body.question,
     req.body.answer,
     req.body.difficulty,
+    req.body.course,
+    req.body.chapter,
     req.body.teacher_id,
     createdAt,
   ];

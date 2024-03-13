@@ -73,6 +73,15 @@
             margin-top: 10px;
           }
         }
+
+        .chapters {
+          border: 1px solid #999;
+          margin-bottom: 20px;
+          padding: 3px;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+        }
       }
     }
   }

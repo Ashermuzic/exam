@@ -56,6 +56,9 @@ const SingleQuestion = () => {
             );
           })}
         </div>
+        <div className="bottom">
+          <div className="body">this and that</div>
+        </div>
       </div>
     </div>
   );

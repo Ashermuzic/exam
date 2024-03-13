@@ -13,13 +13,6 @@ export const questionsInputs = [
     type: "text",
     placeholder: "the answer the question",
   },
-  {
-    id: 3,
-    label: "Difficulty",
-    name: "difficulty",
-    type: "text",
-    placeholder: "easy / medium / hard",
-  },
 ];
 
 export const examInputs = [

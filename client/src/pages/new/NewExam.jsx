@@ -75,14 +75,16 @@ const NewExam = ({ inputs, title }) => {
       chapters: selectedChapters,
     };
 
-    axios
-      .post("http://localhost:8800/questions/add", updatedFormData)
-      .then((res) => {
-        navigate("/questions");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(updatedFormData);
+
+    // axios
+    //   .post("http://localhost:8800/questions/add", updatedFormData)
+    //   .then((res) => {
+    //     navigate("/questions");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const handleInputChange = (e, inputName) => {
