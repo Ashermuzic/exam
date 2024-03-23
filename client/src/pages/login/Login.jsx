@@ -33,7 +33,7 @@ const Login = () => {
     <div>
       <div>login</div>
       <input type="text" name="username" onChange={handelChange} />
-      <input type="text" name="password" onChange={handelChange} />
+      <input type="password" name="password" onChange={handelChange} />
       <p>{err && err}</p>
       <button onClick={handleLogin}>login</button>
     </div>

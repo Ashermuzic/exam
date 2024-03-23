@@ -32,16 +32,6 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="users">
-              <Route index element={<List />} />
-              <Route path=":userId" element={<Single />} />
-              <Route
-                path="new"
-                element={
-                  <New inputs={questionsInputs} title="Add New Question" />
-                }
-              />
-            </Route>
             <Route path="questions">
               <Route index element={<QuestionList />} />
               <Route path=":questionId" element={<SingleQuestion />} />

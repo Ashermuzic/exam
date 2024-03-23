@@ -12,6 +12,7 @@ const NewQuestion = ({ inputs, title }) => {
   const teacher = JSON.parse(username);
   const teacher_id = teacher.id;
   const [courseCount, setCourseCount] = useState(0);
+  const [error, setError] = useState("");
 
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
@@ -76,6 +77,7 @@ const NewQuestion = ({ inputs, title }) => {
         navigate("/questions");
       })
       .catch((err) => {
+        setError(err.message);
         console.log(err);
       });
   };
@@ -167,7 +169,8 @@ const NewQuestion = ({ inputs, title }) => {
                   <option value="hard">Hard</option>
                 </select>
               </div>
-              <button onClick={handleSubmit}>Send</button>
+              <p className="error">{error}</p>
+              <button onClick={handleSubmit}>Add</button>
             </form>
           </div>
         </div>

@@ -1,4 +1,4 @@
-export const userColumns = [
+export const questionColumns = [
   { field: "id", headerName: "ID", width: 60 },
   {
     field: "question",
@@ -21,6 +21,11 @@ export const userColumns = [
     field: "course_name",
     headerName: "Course",
     width: 140,
+  },
+  {
+    field: "chapter",
+    headerName: "Chapter",
+    width: 100,
   },
   {
     field: "difficulty",
