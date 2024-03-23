@@ -31,8 +31,83 @@ const SingleQuestion = () => {
   }, []);
 
   const handlePrint = () => {
-    console.log("print functionally");
+    const printableContent = document.getElementById("printable-content");
+    if (printableContent) {
+      const contentToPrint = printableContent.innerHTML;
+      const newWindow = window.open("", "_blank");
+      newWindow.document.open();
+      newWindow.document.write(`
+        <html>
+          <head>
+            <style>
+              /* Add your custom styles for printing here */
+              .body {
+                flex: 1;
+                width: 210mm;
+                height: 287mm;
+              }
+
+              .body .exam-desc {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+              }
+              .body .exam-desc .single {
+                display: flex;
+                align-items: center;
+                font-size: 20px;
+                font-weight: 700;
+              }
+              .body .exam-desc .single h3 {
+                font-size: 15px;
+                margin-right: 50px;
+              }
+         
+
+              .instructions {
+                margin-top: 30px;
+                padding: 20px 30px;
+                border: 2px solid #333;
+                border-radius: 40px;
+              }
+              .instructions .ins-title {
+                text-decoration: underline;
+                font-weight: bold;
+              }
+
+              .exam-body {
+                margin-top: 30px;
+                font-size: 17px;
+                margin-bottom: 140px;
+              }
+
+              .exam-body li {
+                margin-bottom: 20px;
+              }
+
+              .good-luck {
+                display: flex;
+                justify-content: center;
+              }
+
+              .printable-content {
+                /* Define your styles for the printable section */
+              }
+            </style>
+          </head>
+          <body onload="window.print()">
+            <div class="printable-content">
+              ${contentToPrint}
+            </div>
+          </body>
+        </html>
+      `);
+      newWindow.document.close();
+    } else {
+      console.error("Could not find printable content.");
+    }
   };
+
   return (
     <div className="single">
       <Sidebar />
@@ -72,7 +147,7 @@ const SingleQuestion = () => {
         <div className="print-button">
           <button onClick={handlePrint}>Print</button>
         </div>
-        <div className="bottom">
+        <div className="bottom" id="printable-content">
           <div className="body">
             <div className="exam-desc">
               <div className="single underline">
